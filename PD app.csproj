@@ -1,0 +1,569 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<OutputType>Exe</OutputType>
+		<RootNamespace>PD_app</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<!-- Display name -->
+		<ApplicationTitle>PD app</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.pdapp</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
+		<WindowsPackageType>None</WindowsPackageType>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\AppIcon\appiconfg.svg" />
+	  <None Remove="Resources\Images\bgimg\frame_00000.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00001.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00002.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00003.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00004.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00005.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00006.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00007.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00008.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00009.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00010.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00011.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00012.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00013.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00014.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00015.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00016.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00017.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00018.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00019.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00020.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00021.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00022.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00023.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00024.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00025.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00026.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00027.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00028.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00029.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00030.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00031.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00032.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00033.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00034.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00035.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00036.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00037.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00038.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00039.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00040.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00041.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00042.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00043.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00044.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00045.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00046.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00047.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00048.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00049.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00050.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00051.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00052.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00053.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00054.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00055.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00056.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00057.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00058.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00059.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00060.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00061.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00062.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00063.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00064.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00065.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00066.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00067.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00068.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00069.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00070.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00071.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00072.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00073.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00074.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00075.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00076.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00077.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00078.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00079.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00080.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00081.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00082.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00083.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00084.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00085.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00086.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00087.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00088.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00089.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00090.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00091.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00092.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00093.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00094.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00095.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00096.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00097.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00098.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00099.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00100.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00101.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00102.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00103.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00104.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00105.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00106.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00107.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00108.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00109.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00110.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00111.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00112.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00113.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00114.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00115.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00116.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00117.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00118.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00119.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00120.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00121.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00122.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00123.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00124.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00125.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00126.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00127.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00128.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00129.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00130.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00131.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00132.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00133.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00134.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00135.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00136.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00137.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00138.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00139.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00140.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00141.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00142.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00143.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00144.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00145.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00146.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00147.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00148.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00149.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00150.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00151.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00152.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00153.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00154.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00155.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00156.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00157.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00158.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00159.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00160.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00161.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00162.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00163.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00164.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00165.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00166.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00167.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00168.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00169.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00170.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00171.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00172.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00173.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00174.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00175.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00176.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00177.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00178.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00179.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00180.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00181.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00182.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00183.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00184.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00185.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00186.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00187.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00188.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00189.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00190.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00191.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00192.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00193.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00194.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00195.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00196.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00197.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00198.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00199.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00200.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00201.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00202.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00203.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00204.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00205.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00206.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00207.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00208.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00209.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00210.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00211.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00212.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00213.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00214.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00215.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00216.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00217.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00218.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00219.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00220.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00221.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00222.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00223.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00224.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00225.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00226.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00227.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00228.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00229.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00230.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00231.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00232.png" />
+	  <None Remove="Resources\Images\bgimg\frame_00233.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\bgimg\frame_00000.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00001.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00002.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00003.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00004.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00005.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00006.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00007.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00008.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00009.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00010.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00011.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00012.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00013.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00014.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00015.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00016.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00017.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00018.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00019.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00020.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00021.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00022.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00023.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00024.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00025.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00026.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00027.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00028.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00029.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00030.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00031.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00032.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00033.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00034.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00035.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00036.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00037.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00038.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00039.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00040.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00041.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00042.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00043.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00044.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00045.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00046.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00047.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00048.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00049.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00050.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00051.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00052.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00053.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00054.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00055.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00056.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00057.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00058.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00059.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00060.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00061.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00062.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00063.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00064.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00065.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00066.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00067.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00068.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00069.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00070.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00071.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00072.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00073.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00074.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00075.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00076.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00077.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00078.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00079.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00080.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00081.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00082.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00083.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00084.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00085.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00086.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00087.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00088.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00089.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00090.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00091.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00092.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00093.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00094.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00095.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00096.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00097.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00098.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00099.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00100.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00101.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00102.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00103.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00104.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00105.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00106.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00107.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00108.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00109.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00110.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00111.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00112.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00113.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00114.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00115.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00116.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00117.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00118.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00119.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00120.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00121.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00122.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00123.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00124.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00125.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00126.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00127.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00128.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00129.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00130.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00131.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00132.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00133.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00134.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00135.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00136.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00137.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00138.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00139.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00140.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00141.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00142.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00143.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00144.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00145.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00146.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00147.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00148.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00149.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00150.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00151.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00152.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00153.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00154.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00155.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00156.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00157.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00158.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00159.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00160.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00161.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00162.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00163.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00164.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00165.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00166.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00167.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00168.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00169.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00170.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00171.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00172.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00173.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00174.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00175.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00176.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00177.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00178.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00179.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00180.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00181.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00182.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00183.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00184.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00185.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00186.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00187.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00188.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00189.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00190.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00191.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00192.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00193.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00194.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00195.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00196.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00197.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00198.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00199.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00200.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00201.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00202.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00203.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00204.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00205.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00206.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00207.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00208.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00209.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00210.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00211.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00212.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00213.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00214.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00215.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00216.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00217.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00218.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00219.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00220.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00221.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00222.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00223.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00224.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00225.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00226.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00227.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00228.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00229.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00230.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00231.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00232.png" />
+	  <MauiImage Include="Resources\Images\bgimg\frame_00233.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="CategoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Choose.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="EducationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Knowledge.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="NewPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Record.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+</Project>

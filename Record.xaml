@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PD_app.Record"
+             Title="Record"
+             BackgroundColor="#ccd5ae">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- 日期選擇 -->
+            <Label Text="選擇日期：" FontSize="18" />
+            <DatePicker x:Name="datePicker" />
+
+            <!-- 時段選擇 -->
+            <Label Text="選擇時段：" FontSize="18" />
+            <Picker x:Name="sessionPicker"
+                Title="請選擇時段" />
+
+            <!-- 灌入量輸入 -->
+            <Label Text="灌入量 (ml)：" FontSize="18" />
+            <Entry x:Name="fillEntry"
+               Keyboard="Numeric"
+               Placeholder="請輸入灌入量" />
+
+            <!-- 排出量輸入 -->
+            <Label Text="排出量 (ml)：" FontSize="18" />
+            <Entry x:Name="drainEntry"
+               Keyboard="Numeric"
+               Placeholder="請輸入排出量" />
+
+            <!-- 儲存按鈕 -->
+            <Button Text="儲存紀錄"
+                Clicked="OnAddClicked"
+                BackgroundColor="#A18276"/>
+
+            <Button Text="回到主頁"
+                BackgroundColor="#A18276"
+                Clicked="backButton_Clicked" />
+
+            <!-- 今日總脫水量 -->
+            <Label x:Name="todayTotalLabel"
+               FontAttributes="Bold"
+               FontSize="18"
+               TextColor="#A18276" />
+
+            <!-- 今日紀錄列表 -->
+            <Label Text="今日已輸入紀錄："
+               FontSize="18" />
+
+            <CollectionView x:Name="recordsListView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5"
+                           Padding="10"
+                           BackgroundColor="#F0F0F0"
+                           CornerRadius="10"
+                           HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Session}"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+                                <Label Text="{Binding FillVolume, StringFormat='灌入量: {0} ml'}" />
+                                <Label Text="{Binding DrainVolume, StringFormat='排出量: {0} ml'}" />
+                                <Label Text="{Binding Volume, StringFormat='脫水量: {0} ml'}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

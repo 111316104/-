@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PD_app.SettingsPage"
+             Title="SettingsPage">
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <Label Text="選擇字體大小" FontSize="20" />
+
+        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+            <Button Text="小" Clicked="SmallFont_Clicked" />
+            <Button Text="中" Clicked="MediumFont_Clicked" />
+            <Button Text="大" Clicked="LargeFont_Clicked" />
+        </HorizontalStackLayout>
+
+        <Button Text="回到主頁"
+            BackgroundColor="#A18276"
+            Clicked="backButton_Clicked" />
+
+        <Button Text="登出" Clicked="LogoutButton_Clicked" BackgroundColor="#B99470" TextColor="White" />
+
+    </VerticalStackLayout>
+</ContentPage>

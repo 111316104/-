@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PD_app.Knowledge"
+             Title="Knowledge"
+             BackgroundColor="#F5F5F5">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- 標題 -->
+            <Label Text="衛教主題選擇"
+               FontSize="32"
+               FontAttributes="Bold"
+               TextColor="#2C3E50"
+               HorizontalOptions="Center" />
+
+            <!-- 按鈕們：每行一個，適合行動裝置 -->
+            <Button Text="🟦 自我照護與日常管理"
+                FontSize="24"
+                FontAttributes="Bold"
+                BackgroundColor="#D0E8F2"
+                TextColor="#2C3E50"
+                CornerRadius="20"
+                Padding="20"
+                HeightRequest="100"
+                LineBreakMode="WordWrap"
+                Clicked="CategoryButton_Clicked" />
+
+            <Button Text="🟩 健康監測與追蹤"
+                FontSize="24"
+                FontAttributes="Bold"
+                BackgroundColor="#D5ECC2"
+                TextColor="#2C3E50"
+                CornerRadius="20"
+                Padding="20"
+                HeightRequest="100"
+                LineBreakMode="WordWrap"
+                Clicked="CategoryButton_Clicked" />
+
+            <Button Text="🟨 心理與社會支持"
+                FontSize="24"
+                FontAttributes="Bold"
+                BackgroundColor="#FFF3B0"
+                TextColor="#2C3E50"
+                CornerRadius="20"
+                Padding="20"
+                HeightRequest="100"
+                LineBreakMode="WordWrap"
+                Clicked="CategoryButton_Clicked" />
+
+            <Button Text="🟥 緊急應變與互動教學"
+                FontSize="24"
+                FontAttributes="Bold"
+                BackgroundColor="#F9D5D3"
+                TextColor="#2C3E50"
+                CornerRadius="20"
+                Padding="20"
+                HeightRequest="100"
+                LineBreakMode="WordWrap"
+                Clicked="CategoryButton_Clicked" />
+
+            <Button Text="回到主頁"
+                FontSize="24"
+                FontAttributes="Bold"
+                BackgroundColor="#F9D5D3"
+                TextColor="#2C3E50"
+                CornerRadius="20"
+                Padding="20"
+                HeightRequest="100"
+                LineBreakMode="WordWrap"
+                Clicked="backButton_Clicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

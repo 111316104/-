@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImageSource = "background.png"
+             x:Class="PD_app.Choose"
+             Title="Choose">
+    <Grid>
+        <!-- 背景人物圖片 -->
+        <Image x:Name="ImageDisplay"
+           Aspect="AspectFill"
+           HorizontalOptions="FillAndExpand"
+           VerticalOptions="FillAndExpand"
+           HeightRequest="650"
+           TranslationY="70"/>
+
+        <!-- 按鈕區塊：浮在圖片上 -->
+        <VerticalStackLayout Padding="20"
+                         Spacing="20"
+                         VerticalOptions="End"
+                         BackgroundColor="#AAFFFFFF">
+            <!-- 半透明白底，避免文字與圖片混淆 -->
+
+            <Label Text="選擇主題"
+               FontSize="24"
+               HorizontalOptions="Center"
+               TextColor="#A18276" />
+
+            <Grid ColumnDefinitions="*,*"
+              RowDefinitions="*,*"
+              Padding="10"
+              ColumnSpacing="15"
+              RowSpacing="15"
+              HorizontalOptions="Center">
+
+                <Button Text="聊天室" Clicked="OnTopic1Clicked" FontSize="18"
+                    HeightRequest="60" WidthRequest="160" Grid.Row="0" Grid.Column="0" BackgroundColor="#A18276"/>
+                <Button Text="衛教知識" Clicked="OnTopic2Clicked" FontSize="18"
+                    HeightRequest="60" WidthRequest="160" Grid.Row="0" Grid.Column="1" BackgroundColor="#A18276"/>
+                <Button Text="紀錄脫水量" Clicked="OnTopic3Clicked" FontSize="18"
+                    HeightRequest="60" WidthRequest="160" Grid.Row="1" Grid.Column="0" BackgroundColor="#A18276"/>
+                <Button Text="設定" Clicked="OnTopic4Clicked" FontSize="18"
+                    HeightRequest="60" WidthRequest="160" Grid.Row="1" Grid.Column="1" BackgroundColor="#A18276"/>
+
+
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
