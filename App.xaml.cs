@@ -10,7 +10,7 @@
 
             if (isLoggedIn)
             {
-                MainPage = new NavigationPage(new Choose());
+                MainPage = new AppShell();
             }
 
             else

@@ -12,6 +12,8 @@ namespace PD_app
         public MainPage()
         {
             InitializeComponent();
+            // 在 Record 的建構子或需要時
+            FontManager.ApplyFontSizeToPage(this);
         }
 
         private async void OnLoginClicked(object sender, EventArgs e)
@@ -33,7 +35,7 @@ namespace PD_app
                 Preferences.Set("CurrentUser", username); // 可選：記住當前帳號
 
                 await DisplayAlert("成功", "登入成功", "OK");
-                Application.Current.MainPage = new NavigationPage(new Choose());
+                Application.Current.MainPage = new AppShell();
             }
             else
             {

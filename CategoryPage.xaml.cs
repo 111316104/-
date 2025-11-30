@@ -8,19 +8,12 @@ public partial class CategoryPage : ContentPage
     public CategoryPage(string category)
 	{
 		InitializeComponent();
+
+        FontManager.ApplyFontSizeToPage(this);
+
         CategoryTitle = category;
         BindingContext = this;
         LoadCategoryButtons(category);
-
-        // 1. 讀取已儲存的字體大小並套用
-        int fontSize = Preferences.Get("AppFontSize", 18);
-        ApplyFontSize(fontSize);
-
-        // 2. 訂閱字體大小變化事件
-        MessagingCenter.Subscribe<ContentPage, int>(this, "FontSizeChanged", (sender, size) =>
-        {
-            ApplyFontSize(size);
-        });
 
     }
     private void LoadCategoryButtons(string category)
@@ -53,6 +46,16 @@ public partial class CategoryPage : ContentPage
                 AddStyledButton("災難應變與緊急備案", sosClicked);
                 break;
         }
+        AddStyledButton("返回上一頁", BackToPreviousPage_Clicked);
+    }
+    
+    private async void BackToPreviousPage_Clicked(object sender, EventArgs e)
+    {
+        // 如果這頁是用 Navigation.PushAsync 進入的：
+        await Navigation.PopAsync();
+
+        // 若是用 Application.Current.MainPage 切換進來的，請改這行：
+        // Application.Current.MainPage = new NavigationPage(new Knowledge());
     }
 
     private void AddStyledButton(string text, EventHandler handler)
@@ -60,7 +63,7 @@ public partial class CategoryPage : ContentPage
         var button = new Button
         {
             Text = text,
-            FontSize = 20,
+            FontSize = 22,
             FontAttributes = FontAttributes.Bold,
             TextColor = Colors.White,
             BackgroundColor = Color.FromArgb("#A18276"),
@@ -445,20 +448,5 @@ public partial class CategoryPage : ContentPage
         await Navigation.PushAsync(new EducationPage(title, faq));
     }
 
-    private void ApplyFontSize(int size)
-    {
-        // 根據你 Knowledge 頁面上的元件設定字體大小
-        // 例如你有標題 Label 或多個 Button：
-        // titleLabel.FontSize = size;
-        // 如果按鈕是透過 XAML 設定好名稱：
-        // categoryButton1.FontSize = size;
-        // categoryButton2.FontSize = size;
-
-        // 如果你沒有個別命名按鈕，而是用 XAML 樣式自動產生，也可以在 CategoryButton_Clicked 中取得 sender 為 Button 時改大小，
-        // 但建議是直接在此針對主要 Label/Title 做設定即可。
-
-        // 範例：
-        // 如果 Knowledge.xaml 有一個名稱為 knowledgeTitle 的 Label：
-        // knowledgeTitle.FontSize = size;
-    }
+    
 }

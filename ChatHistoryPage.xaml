@@ -1,0 +1,24 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PD_app.ChatHistoryPage"
+             NavigationPage.HasNavigationBar="False">
+    <CollectionView x:Name="HistoryCollection"
+                    Margin="10">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame CornerRadius="5"
+                       Margin="5"
+                       Padding="5"
+                       BorderColor="Gray"
+                       BackgroundColor="{Binding SenderColor}">
+                    <StackLayout>
+                        <Label Text="{Binding Sender}" FontAttributes="Bold" FontSize="{Binding FontSize}" />
+                        <Label Text="{Binding Message}" LineBreakMode="WordWrap" FontSize="{Binding FontSize}" />
+                        <Label Text="{Binding TimestampString}" FontSize="{Binding FontSize}" HorizontalOptions="End" />
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

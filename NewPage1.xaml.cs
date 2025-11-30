@@ -8,7 +8,9 @@ public partial class NewPage1 : ContentPage
     public NewPage1()
 	{
 		InitializeComponent();
-	}
+        // 在 Record 的建構子或需要時
+        FontManager.ApplyFontSizeToPage(this);
+    }
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         

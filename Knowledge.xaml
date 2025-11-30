@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PD_app.Knowledge"
-             Title="Knowledge"
-             BackgroundColor="#F5F5F5">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#ccd5ae">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
 
@@ -62,7 +62,7 @@
             <Button Text="回到主頁"
                 FontSize="24"
                 FontAttributes="Bold"
-                BackgroundColor="#F9D5D3"
+                BackgroundColor="#B99470"
                 TextColor="#2C3E50"
                 CornerRadius="20"
                 Padding="20"

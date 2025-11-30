@@ -2,71 +2,96 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PD_app.NewPage1"
-             Title="註冊頁面"
+             NavigationPage.HasNavigationBar="False"
              BackgroundColor="#ccd5ae">
-    <VerticalStackLayout
-        Padding="40"
-        Spacing="30"
-        HorizontalOptions="Center">
 
-        <Image 
-            Source="login.png"
-            WidthRequest="150"
-            HeightRequest="150"
-            HorizontalOptions="Center" />
+    <!-- 使用 Grid 讓內容在平板置中 -->
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="20"
+                Spacing="15"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
 
-        <Label 
-            Text="註冊"
-            FontSize="32"
-            TextColor="Black"
-            HorizontalOptions="Center" />
+                <!-- 最大寬度控制：平板不會拉太寬 -->
+                <VerticalStackLayout
+                    Spacing="15"
+                    WidthRequest="400"
+                    MaximumWidthRequest="450"
+                    HorizontalOptions="Center">
 
-        <!-- 帳號欄位 -->
-        <Label Text="👤 帳號" FontSize="20" TextColor="Black" HorizontalOptions="Center" />
-        <Entry 
-            x:Name="usernameEntry"
-            Placeholder="請輸入帳號"
-            FontSize="20"
-            WidthRequest="280"
-            HeightRequest="55"
-            HorizontalOptions="Center" />
+                    <Image 
+                        Source="login.png"
+                        WidthRequest="200"
+                        HeightRequest="200"
+                        HorizontalOptions="Center" />
 
-        <!-- 密碼欄位 -->
-        <Label Text="🔒 密碼" FontSize="20" TextColor="Black" HorizontalOptions="Center" />
-        <Entry 
-            x:Name="passwordEntry"
-            Placeholder="請輸入密碼"
-            IsPassword="True"
-            FontSize="20"
-            WidthRequest="280"
-            HeightRequest="55"
-            HorizontalOptions="Center" />
+                    <Label 
+                        Text="註冊"
+                        FontSize="28"
+                        TextColor="Black"
+                        HorizontalOptions="Center" />
 
-        <!-- 返回登入 -->
-        <Button 
-            Text="返回登入"
-            FontSize="20"
-            WidthRequest="280"
-            HeightRequest="60"
-            BackgroundColor="White"
-            TextColor="Black"
-            BorderColor="Black"
-            BorderWidth="1"
-            CornerRadius="10"
-            HorizontalOptions="Center"
-            Clicked="OnLoginClicked" />
+                    <!-- 帳號欄位 -->
+                    <Label Text="👤 帳號" 
+                           FontSize="18" 
+                           TextColor="Black" />
 
-        <!-- 註冊按鈕 -->
-        <Button 
-            Text="註冊"
-            FontSize="20"
-            WidthRequest="280"
-            HeightRequest="60"
-            BackgroundColor="#A18276"
-            TextColor="White"
-            CornerRadius="10"
-            HorizontalOptions="Center"
-            Clicked="OnRegisterClicked" />
+                    <Entry 
+                        x:Name="usernameEntry"
+                        Placeholder="請輸入帳號(身分證)"
+                        FontSize="18"
+                        HeightRequest="50"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        HorizontalOptions="Fill"
+                        MaximumWidthRequest="450" />
 
-    </VerticalStackLayout>
+                    <!-- 密碼欄位 -->
+                    <Label Text="🔒 密碼" 
+                           FontSize="18" 
+                           TextColor="Black" />
+
+                    <Entry 
+                        x:Name="passwordEntry"
+                        Placeholder="請輸入密碼(西元生日(YYYYMMDD))"
+                        IsPassword="True"
+                        FontSize="18"
+                        HeightRequest="50"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        HorizontalOptions="Fill"
+                        MaximumWidthRequest="450" />
+
+                    <!-- 返回登入 -->
+                    <Button 
+                        Text="返回登入"
+                        FontSize="18"
+                        HeightRequest="55"
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        BorderColor="Black"
+                        BorderWidth="1"
+                        CornerRadius="10"
+                        HorizontalOptions="Fill"
+                        MaximumWidthRequest="450"
+                        Clicked="OnLoginClicked" />
+
+                    <!-- 註冊按鈕 -->
+                    <Button 
+                        Text="註冊"
+                        FontSize="18"
+                        HeightRequest="55"
+                        BackgroundColor="#A18276"
+                        TextColor="White"
+                        CornerRadius="10"
+                        HorizontalOptions="Fill"
+                        MaximumWidthRequest="450"
+                        Clicked="OnRegisterClicked" />
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

@@ -1,15 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="PD_app.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:PD_app"
-    Shell.FlyoutBehavior="Flyout"
-    Title="PD_app">
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:PD_app"
+       x:Class="PD_app.AppShell">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- 側邊欄選單 -->
+    <FlyoutItem Title="🏠 主頁" Icon="home.png">
+        <ShellContent ContentTemplate="{DataTemplate local:Choose}" />
+    </FlyoutItem>
 
+    <!-- 動態影片列表 -->
+    <Shell.FlyoutHeader>
+        <ScrollView>
+            <VerticalStackLayout x:Name="VideoStack" Padding="10" Spacing="10">
+                <!-- 影片會在 AppShell.xaml.cs 動態加入 -->
+            </VerticalStackLayout>
+        </ScrollView>
+    </Shell.FlyoutHeader>
 </Shell>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BackgroundImageSource = "background.png"
              x:Class="PD_app.Choose"
-             Title="Choose">
+             NavigationPage.HasNavigationBar="False">
     <Grid>
         <!-- 背景人物圖片 -->
         <Image x:Name="ImageDisplay"

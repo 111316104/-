@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="PD_app.ChartsPage"
+             BackgroundColor="#ccd5ae"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="圖表查詢" 
+                   FontSize="24" 
+                   HorizontalOptions="Center"
+                   TextColor="#333"/>
+
+            <!-- 日期範圍 -->
+            <Label Text="選擇日期範圍：" FontSize="18"/>
+            <HorizontalStackLayout Spacing="10">
+                <DatePicker x:Name="startDatePicker" />
+                <Label Text="～" VerticalOptions="Center" FontSize="18"/>
+                <DatePicker x:Name="endDatePicker" />
+            </HorizontalStackLayout>
+
+            <!-- 快速選擇範圍 -->
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="今日" BackgroundColor="#A18276" TextColor="White" CommandParameter="today" Clicked="QuickRangeButton_Clicked"/>
+                <Button Text="最近一週" BackgroundColor="#A18276" TextColor="White" CommandParameter="week" Clicked="QuickRangeButton_Clicked"/>
+                <Button Text="最近一月" BackgroundColor="#A18276" TextColor="White" CommandParameter="month" Clicked="QuickRangeButton_Clicked"/>
+            </HorizontalStackLayout>
+
+            <!-- 圖表切換 -->
+            <Label Text="選擇圖表：" FontSize="18"/>
+            <Picker x:Name="chartPicker" SelectedIndexChanged="ChartPicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>體重變化</x:String>
+                    <x:String>血壓變化</x:String>
+                    <x:String>每日總脫水量</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Button Text="更新圖表" BackgroundColor="#A18276" TextColor="White" Clicked="OnUpdateChartClicked"/>
+
+            <!-- 體重圖 -->
+            <lvc:CartesianChart x:Name="weightChart" HeightRequest="300"/>
+
+            <!-- 血壓圖 -->
+            <lvc:CartesianChart x:Name="bloodPressureChart" HeightRequest="300" IsVisible="False"/>
+
+            <!-- 總脫水量圖 -->
+            <lvc:CartesianChart x:Name="volumeChart" HeightRequest="300" IsVisible="False"/>
+
+            <!-- 返回按鈕 -->
+            <Button Text="返回" BackgroundColor="#A18276" TextColor="White" Clicked="backButton_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

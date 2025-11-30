@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SQLite;
 
 namespace PD_app.Models
@@ -20,7 +16,13 @@ namespace PD_app.Models
 
         public int DrainVolume { get; set; }
 
-        [Ignore] // 不儲存於資料庫，只用來顯示用
-        public int Volume => DrainVolume - FillVolume;
+        // 體重 (kg)
+        public float? Weight { get; set; }
+
+        // 血壓 (mmHg)
+        public int? Systolic { get; set; }
+        public int? Diastolic { get; set; }
+        // 這次要存進資料庫
+        public int Volume { get; set; }
     }
 }
