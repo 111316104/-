@@ -1,6 +1,6 @@
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using PD_app.Models;
+ï»¿using PD_app.Models;
 using PD_app.Services;
+using System.Globalization;
 
 namespace PD_app;
 
@@ -8,28 +8,51 @@ public partial class Record : ContentPage
 {
     List<DehydrationRecord> todayRecords = new();
 
-    public Record() : this(DateTime.Today) // ¦pªG¤£¶Ç»¼°Ñ¼Æ¡A«h¹w³]¨Ï¥Î¤µ¤Ñªº¤é´Á
+    public Record() : this(DateTime.Today)
     {
     }
+
     public Record(DateTime? date = null)
-	{
-		InitializeComponent();
-        sessionPicker.ItemsSource = new List<string> { "¦­", "¤È", "±ß", "ºÎ«e" };
+    {
+        InitializeComponent();
+
+        FontManager.ApplyFontSizeToPage(this);
+
+        sessionPicker.ItemsSource = new List<string> { "æ—©", "åˆ", "æ™š", "ç¡å‰" };
         datePicker.Date = date ?? DateTime.Today;
+
         datePicker.DateSelected += DatePicker_DateSelected;
-
-        // 1. Åª¨ú¨Ã®M¥Î¦rÅé¤j¤p
-        int fontSize = Preferences.Get("AppFontSize", 18);
-        ApplyFontSize(fontSize);
-
-        // 2. ­q¾\¦rÅé¤j¤pÅÜ¤Æ
-        MessagingCenter.Subscribe<ContentPage, int>(this, "FontSizeChanged", (sender, size) =>
-        {
-            ApplyFontSize(size);
-        });
+        sessionPicker.SelectedIndexChanged += SessionPicker_SelectedIndexChanged;
 
         Init();
     }
+
+    private void UnlockInputs()
+    {
+        fillEntry.IsEnabled = true;
+        drainEntry.IsEnabled = true;
+        weightEntry.IsEnabled = true;
+        systolicEntry.IsEnabled = true;
+        diastolicEntry.IsEnabled = true;
+    }
+
+    private void SessionPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UnlockInputs();
+
+        string selected = sessionPicker.SelectedItem?.ToString();
+
+        bool isMorning = selected == "æ—©";
+
+        weightLabel.IsVisible = isMorning;
+        weightEntry.IsVisible = isMorning;
+
+        bpLabel.IsVisible = isMorning;
+        sdLabel.IsVisible = isMorning;
+        systolicEntry.IsVisible = isMorning;
+        diastolicEntry.IsVisible = isMorning;
+    }
+
     private async void Init()
     {
         await DatabaseService.InitAsync();
@@ -38,90 +61,134 @@ public partial class Record : ContentPage
 
     private async Task LoadTodayRecords()
     {
-        DateTime today = datePicker.Date;
-        var sessions = new[] { "¦­", "¤È", "±ß", "ºÎ«e" };
+        DateTime date = datePicker.Date;
+        var sessions = new[] { "æ—©", "åˆ", "æ™š", "ç¡å‰" };
+
         todayRecords.Clear();
 
-        foreach (var session in sessions)
+        foreach (var s in sessions)
         {
-            var record = await DatabaseService.GetRecordByDateAndSessionAsync(today, session);
-            if (record != null)
-            {
-                todayRecords.Add(record);
-            }
+            var r = await DatabaseService.GetRecordByDateAndSessionAsync(date, s);
+            if (r != null) todayRecords.Add(r);
         }
 
-
-        recordsListView.ItemsSource = null;
         recordsListView.ItemsSource = todayRecords;
-
-        int totalToday = todayRecords.Sum(r => r.Volume);
-        todayTotalLabel.Text = $"¤µ¤éÁ`²æ¤ô¶q¡G{totalToday} ml";
+        int total = todayRecords.Sum(r => r.Volume);
+        todayTotalLabel.Text = $"ä»Šæ—¥ç¸½è„«æ°´é‡ï¼š{total} ml";
     }
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        if (sessionPicker.SelectedItem == null ||
-            !int.TryParse(fillEntry.Text, out int fill) ||
-            !int.TryParse(drainEntry.Text, out int drain))
+        bool ok = true;
+
+        if (!int.TryParse(fillEntry.Text, out int fill) || fill <= 0 || fill >= 5000)
+        { fillError.IsVisible = true; ok = false; }
+        else fillError.IsVisible = false;
+
+        if (!int.TryParse(drainEntry.Text, out int drain) || drain < 0 || drain >= 5000)
+        { drainError.IsVisible = true; ok = false; }
+        else drainError.IsVisible = false;
+
+        if (sessionPicker.SelectedItem == null)
         {
-            await DisplayAlert("¿ù»~", "½Ğ½T»{©Ò¦³Äæ¦ì¬Ò¤w¶ñ¼g", "½T©w");
+            await DisplayAlert("éŒ¯èª¤", "è«‹é¸æ“‡æ™‚æ®µ", "ç¢ºå®š");
             return;
         }
 
-        var selectedDate = datePicker.Date;
         string session = sessionPicker.SelectedItem.ToString();
 
-        var existing = await DatabaseService.GetRecordByDateAndSessionAsync(selectedDate, session);
+        float? weight = null;
+        int? sys = null;
+        int? dia = null;
+
+        if (session == "æ—©")
+        {
+            if (!float.TryParse(weightEntry.Text, out float w) || w <= 0)
+            { weightError.IsVisible = true; ok = false; }
+            else { weightError.IsVisible = false; weight = w; }
+
+            if (!int.TryParse(systolicEntry.Text, out int s1) || s1 < 50 || s1 > 250)
+            { systolicError.IsVisible = true; ok = false; }
+            else { systolicError.IsVisible = false; sys = s1; }
+
+            if (!int.TryParse(diastolicEntry.Text, out int d1) || d1 < 30 || d1 > 150)
+            { diastolicError.IsVisible = true; ok = false; }
+            else { diastolicError.IsVisible = false; dia = d1; }
+        }
+
+        if (!ok)
+        {
+            await DisplayAlert("éŒ¯èª¤", "è«‹ç¢ºèªæ‰€æœ‰è¼¸å…¥æ¬„ä½", "ç¢ºå®š");
+            return;
+        }
+
+        var date = datePicker.Date;
+        var existing = await DatabaseService.GetRecordByDateAndSessionAsync(date, session);
 
         if (existing != null)
         {
             existing.FillVolume = fill;
             existing.DrainVolume = drain;
+            existing.Weight = weight;
+            existing.Systolic = sys;
+            existing.Diastolic = dia;
+            existing.Volume = drain - fill;
+
             await DatabaseService.UpdateRecordAsync(existing);
         }
         else
         {
-            var newRecord = new DehydrationRecord
+            var r = new DehydrationRecord
             {
-                Date = selectedDate,
+                Date = date,
                 Session = session,
                 FillVolume = fill,
-                DrainVolume = drain
+                DrainVolume = drain,
+                Weight = weight,
+                Systolic = sys,
+                Diastolic = dia,
+                Volume = drain - fill
             };
-            await DatabaseService.InsertRecordAsync(newRecord);
+            await DatabaseService.InsertRecordAsync(r);
         }
 
         await LoadTodayRecords();
+
+        fillEntry.IsEnabled = false;
+        drainEntry.IsEnabled = false;
+        if (session == "æ—©")
+        {
+            weightEntry.IsEnabled = false;
+            systolicEntry.IsEnabled = false;
+            diastolicEntry.IsEnabled = false;
+        }
+    }
+
+    public class EqualsToBoolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null) return false;
+            return value.ToString() == (string)parameter;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
     }
 
     private async void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-        await LoadTodayRecords(); // ¤é´Á¿ï¾Ü«á¸ü¤J¸Ó¤é¬ö¿ı
+        UnlockInputs();
+        await LoadTodayRecords();
     }
-
-    // 3. ³o¸Ì¬O®M¥Î¦rÅé¤j¤pªº¤èªk
-    private void ApplyFontSize(int size)
-    {
-        // §A¥i¥H®Ú¾Ú­¶­±¤º©Ò¦³¤å¦r¤¸¥ó¤@¤@³]©w FontSize
-        datePicker.FontSize = size;
-        sessionPicker.FontSize = size;
-        fillEntry.FontSize = size;
-        drainEntry.FontSize = size;
-        todayTotalLabel.FontSize = size;
-
-        // recordsListView ¬O¦Cªí¡A¦pªG¬O Template ¤ºªº Label¡A
-        // §A»İ­n¦b XAML ¸Ì­±§â¦rÅé¤j¤p¸j©w¨ì ViewModel ©Î¨Ï¥Î DataTemplate¡A
-        // ³o¸Ì¥Ü½d°ò¥»ªº³]¸m¡A¦pªG·Q­n§ó°ÊºA¡A½Ğ§i¶D§Ú¡C
-
-        // °²³]§A­¶­±ÁÙ¦³¨ä¥L Label ¤]¤@¨Ö³]©w
-        // ¨Ò¦p
-        // someLabel.FontSize = size;
-    }
-
 
     private async void backButton_Clicked(object sender, EventArgs e)
     {
-        Application.Current.MainPage = new NavigationPage(new Choose());
+        await Navigation.PopAsync();
+    }
+
+    private async void ChartClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(ChartsPage));
     }
 }

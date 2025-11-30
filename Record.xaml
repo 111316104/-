@@ -2,66 +2,157 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PD_app.Record"
-             Title="Record"
-             BackgroundColor="#ccd5ae">
+             BackgroundColor="#ccd5ae"
+             NavigationPage.HasNavigationBar="False">
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
 
             <!-- 日期選擇 -->
             <Label Text="選擇日期：" FontSize="18" />
-            <DatePicker x:Name="datePicker" />
+            <DatePicker x:Name="datePicker" BackgroundColor="White" TextColor="Black" />
 
             <!-- 時段選擇 -->
             <Label Text="選擇時段：" FontSize="18" />
             <Picker x:Name="sessionPicker"
-                Title="請選擇時段" />
+                    Title="請選擇時段"
+                    BackgroundColor="White"
+                    TextColor="Black" />
 
             <!-- 灌入量輸入 -->
             <Label Text="灌入量 (ml)：" FontSize="18" />
             <Entry x:Name="fillEntry"
-               Keyboard="Numeric"
-               Placeholder="請輸入灌入量" />
+                   Keyboard="Numeric"
+                   Placeholder="請輸入灌入量"
+                   BackgroundColor="White"
+                   TextColor="Black" />
+            <Label x:Name="fillError" TextColor="Red" FontSize="14" IsVisible="False" Text="請輸入有效數字" />
 
             <!-- 排出量輸入 -->
             <Label Text="排出量 (ml)：" FontSize="18" />
             <Entry x:Name="drainEntry"
-               Keyboard="Numeric"
-               Placeholder="請輸入排出量" />
+                   Keyboard="Numeric"
+                   Placeholder="請輸入排出量"
+                   BackgroundColor="White"
+                   TextColor="Black" />
+            <Label x:Name="drainError" TextColor="Red" FontSize="14" IsVisible="False" Text="請輸入有效數字" />
+
+            <!-- 體重輸入 -->
+            <Label x:Name="weightLabel" Text="體重 (kg)：" FontSize="18" IsVisible="False" />
+            <Entry x:Name="weightEntry"
+                   Keyboard="Numeric"
+                   Placeholder="請輸入體重"
+                   IsVisible="False"
+                   BackgroundColor="White"
+                   TextColor="Black" />
+            <Label x:Name="weightError" TextColor="Red" FontSize="14" IsVisible="False" Text="請輸入有效數字" />
+
+            <!-- 血壓輸入 -->
+            <Label x:Name="bpLabel" Text="血壓 (mmHg)：" FontSize="18" IsVisible="False" />
+
+            <StackLayout x:Name="sdLabel" Orientation="Horizontal" IsVisible="False" Spacing="20">
+                <StackLayout>
+                    <Label x:Name="systolic" Text="收縮壓 (高壓)" FontSize="16" />
+                    <Entry x:Name="systolicEntry"
+                           Keyboard="Numeric"
+                           Placeholder="請輸入收縮壓"
+                           WidthRequest="120"
+                           BackgroundColor="White"
+                           TextColor="Black" />
+                    <Label x:Name="systolicError" TextColor="Red" FontSize="14" IsVisible="False" Text="請輸入有效收縮壓" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Label x:Name="diastolic" Text="舒張壓 (低壓)" FontSize="16" />
+                    <Entry x:Name="diastolicEntry"
+                           Keyboard="Numeric"
+                           Placeholder="請輸入舒張壓"
+                           WidthRequest="120"
+                           BackgroundColor="White"
+                           TextColor="Black" />
+                    <Label x:Name="diastolicError" TextColor="Red" FontSize="14" IsVisible="False" Text="請輸入有效舒張壓" />
+                </StackLayout>
+            </StackLayout>
+
 
             <!-- 儲存按鈕 -->
             <Button Text="儲存紀錄"
-                Clicked="OnAddClicked"
-                BackgroundColor="#A18276"/>
+                    Clicked="OnAddClicked"
+                    BackgroundColor="#A18276"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="50"
+                    CornerRadius="10" />
+
+            <Button Text="顯示圖表"
+                    Clicked="ChartClicked"
+                    BackgroundColor="#A18276"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="50"
+                    CornerRadius="10" />
 
             <Button Text="回到主頁"
-                BackgroundColor="#A18276"
-                Clicked="backButton_Clicked" />
+                    Clicked="backButton_Clicked"
+                    BackgroundColor="#A18276"
+                    TextColor="White"
+                    FontSize="18"
+                    HeightRequest="50"
+                    CornerRadius="10" />
 
             <!-- 今日總脫水量 -->
             <Label x:Name="todayTotalLabel"
-               FontAttributes="Bold"
-               FontSize="18"
-               TextColor="#A18276" />
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   TextColor="#A18276" />
 
             <!-- 今日紀錄列表 -->
-            <Label Text="今日已輸入紀錄："
-               FontSize="18" />
+            <Label Text="今日已輸入紀錄：" FontSize="18" />
 
             <CollectionView x:Name="recordsListView">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Margin="5"
-                           Padding="10"
-                           BackgroundColor="#F0F0F0"
-                           CornerRadius="10"
-                           HasShadow="True">
-                            <VerticalStackLayout>
-                                <Label Text="{Binding Session}"
-                                   FontAttributes="Bold"
-                                   FontSize="16" />
-                                <Label Text="{Binding FillVolume, StringFormat='灌入量: {0} ml'}" />
-                                <Label Text="{Binding DrainVolume, StringFormat='排出量: {0} ml'}" />
-                                <Label Text="{Binding Volume, StringFormat='脫水量: {0} ml'}" />
+                               Padding="10"
+                               BackgroundColor="#F0F0F0"
+                               CornerRadius="10"
+                               HasShadow="True">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Session}" FontAttributes="Bold" FontSize="22" />
+                                <Label Text="{Binding FillVolume, StringFormat='灌入量: {0} ml'}" FontSize="22" />
+                                <Label Text="{Binding DrainVolume, StringFormat='排出量: {0} ml'}" FontSize="22" />
+                                <Label Text="{Binding Volume, StringFormat='脫水量: {0} ml'}" FontSize="22" />
+
+                                <!-- 體重 -->
+                                <Label Text="{Binding Weight, StringFormat='體重: {0} kg'}" IsVisible="False" FontSize="22">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Session}"
+                                                     Value="早">
+                                        <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <!-- 血壓 -->
+                                <Label Text="{Binding Systolic, StringFormat='收縮壓: {0} mmHg'}" IsVisible="False" FontSize="22">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Session}"
+                                                     Value="早">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Text="{Binding Diastolic, StringFormat='舒張壓: {0} mmHg'}" IsVisible="False" FontSize="22">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Session}"
+                                                     Value="早">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundImageSource="background.png"
+             x:Class="PD_app.Talking"
+             NavigationPage.HasNavigationBar="False">
+
+    <AbsoluteLayout>
+
+        <!-- Scrollable 主內容 -->
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <VerticalStackLayout>
+                <Label Text="AI 聊天室" FontSize="32" HorizontalOptions="Center" />
+
+                <AbsoluteLayout WidthRequest="500" HeightRequest="500" BackgroundColor="Transparent">
+                    <!--<Image x:Name="AnimatedImage"
+                       WidthRequest="500"
+                       HeightRequest="500"
+                       Aspect="AspectFit"
+                       AbsoluteLayout.LayoutBounds="0,0,1,1"
+                       AbsoluteLayout.LayoutFlags="All" />-->
+
+                    <Image x:Name="AnimatedImage"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       HeightRequest="650"
+                       Aspect="AspectFit"
+                       AbsoluteLayout.LayoutBounds="0.5,0.65,AutoSize,AutoSize"
+                       AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+
+                    <Frame  
+                        x:Name="FloatingDialog"
+                        CornerRadius="10"
+                        BackgroundColor="White"
+                        BorderColor="Black"
+                        HasShadow="True"
+                        AbsoluteLayout.LayoutBounds="0.5,1.0,-1,-1"
+                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                        <ScrollView x:Name="ChatScrollView" WidthRequest="300" HeightRequest="200">
+                            <VerticalStackLayout x:Name="ChatContainer" Spacing="5">
+                                <Label x:Name="DialogText" Text="這是角色的對話" TextColor="Black" />
+                                <Label x:Name="ChatHistory" TextColor="Black" FontSize="12" />
+                            </VerticalStackLayout>
+                        </ScrollView>
+                    </Frame>
+                </AbsoluteLayout>
+
+                <!-- 提示區塊（透明橢圓背景，可左右滑動）-->
+                <Frame
+                    AbsoluteLayout.LayoutBounds="0.5,1,0.9,AutoSize"
+                    AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                    BackgroundColor="#60FFFFFF"
+                    Padding="10"
+                    HasShadow="False">
+
+                    <!-- ⭐ 用 ScrollView 開啟水平滑動 -->
+                    <ScrollView Orientation="Horizontal">
+
+                        <HorizontalStackLayout Spacing="10">
+
+                            <!-- ===== 按鈕 1 ===== -->
+                            <Button x:Name="HintBtn1"
+                                    Text="什麼是腹膜透析"
+                                    Clicked="OnHintClicked"
+                                    BackgroundColor="#A18276"
+                                    TextColor="White">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="1" />
+                                                    <Setter Property="BackgroundColor" Value="#A18276" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Disabled">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="0.4" />
+                                                    <Setter Property="BackgroundColor" Value="#C0C0C0" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+
+                            </Button>
+
+                            <!-- ===== 按鈕 2 ===== -->
+                            <Button x:Name="HintBtn2"
+                                    Text="透析前準備"
+                                    Clicked="OnHintClicked"
+                                    BackgroundColor="#A18276"
+                                    TextColor="White">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="1" />
+                                                    <Setter Property="BackgroundColor" Value="#A18276" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Disabled">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="0.4" />
+                                                    <Setter Property="BackgroundColor" Value="#C0C0C0" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+
+                            </Button>
+
+                            <!-- ===== 按鈕 3 ===== -->
+                            <Button x:Name="HintBtn3"
+                                    Text="飲食注意事項"
+                                    Clicked="OnHintClicked"
+                                    BackgroundColor="#A18276"
+                                    TextColor="White">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="1" />
+                                                    <Setter Property="BackgroundColor" Value="#A18276" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Disabled">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="0.4" />
+                                                    <Setter Property="BackgroundColor" Value="#C0C0C0" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+
+                            </Button>
+
+                            <!-- ===== 按鈕 4 ===== -->
+                            <Button x:Name="HintBtn4"
+                                    Text="脫水量太少怎麼辦"
+                                    Clicked="OnHintClicked"
+                                    BackgroundColor="#A18276"
+                                    TextColor="White">
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="1" />
+                                                    <Setter Property="BackgroundColor" Value="#A18276" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+
+                                            <VisualState x:Name="Disabled">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Opacity" Value="0.4" />
+                                                    <Setter Property="BackgroundColor" Value="#C0C0C0" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </VisualStateManager.VisualStateGroups>
+
+                            </Button>
+
+                        </HorizontalStackLayout>
+
+                    </ScrollView>
+
+                </Frame>
+
+                <Label x:Name="LabelResult" />
+                <Entry x:Name="UserInput"
+                       Placeholder="請輸入問題..."
+                       Completed="OnSendClicked">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Opacity" Value="1" />
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                        <Setter Property="TextColor" Value="Black" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Property="Opacity" Value="0.4" />
+                                        <Setter Property="BackgroundColor" Value="#E0E0E0" />
+                                        <Setter Property="TextColor" Value="#808080" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                </Entry>
+
+                <Button x:Name="MicButton"
+                        Text="🎤 語音輸入"
+                        Clicked="OnMicButtonClicked"
+                        BackgroundColor="#A18276"
+                        TextColor="White">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+
+                                <!-- 正常狀態 -->
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="Opacity" Value="1" />
+                                        <Setter Property="BackgroundColor" Value="#A18276" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <!-- 禁用狀態 -->
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Property="Opacity" Value="0.4" />
+                                        <Setter Property="BackgroundColor" Value="#C0C0C0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+
+                </Button>
+
+                <!--<Button Text="送出" Clicked="OnSendClicked" />-->
+                <Button Text="查看對話歷史" Clicked="OnHistoryClicked" BackgroundColor="#A18276"/>
+                <Button Text="返回" Clicked="ChooseClicked" BackgroundColor="#A18276"/>
+                <WebView/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- 懸浮巢狀選單 -->
+        <Frame x:Name="NestedMenu"
+               IsVisible="False"
+               CornerRadius="10"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               AbsoluteLayout.LayoutBounds="1,0,200,AutoSize"
+               AbsoluteLayout.LayoutFlags="PositionProportional"
+               ZIndex="10"
+               HasShadow="True"
+               Padding="0">
+
+            <VerticalStackLayout Spacing="0" Padding="0">
+                <!-- 第 1 層 -->
+                <Button Text="自我照護與日常管理 ▼" Clicked="button1Clicked"
+                        BackgroundColor="#2C3E50" TextColor="White" FontSize="18" FontAttributes="Bold" CornerRadius="6" Margin="0"/>
+                <StackLayout x:Name="button1" IsVisible="False">
+                    <Button Text="衛生與感染預防" Clicked="button1_1Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button1_1" IsVisible="False">
+                        <Button Text="1. 手部衛生"  Clicked="button1_1_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 操作環境"  Clicked="button1_1_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 個人防護"  Clicked="button1_1_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 透析器材管理"  Clicked="button1_1_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="5. 導管護理"  Clicked="button1_1_5Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="6. 感染徵兆警覺"  Clicked="button1_1_6Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="7. 教育與訓練"  Clicked="button1_1_7Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    </StackLayout>
+
+                    <Button Text="透析操作流程注意" Clicked="button1_2Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button1_2" IsVisible="False">
+                        <Button Text="操作前準備"  Clicked="button1_2_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="透析操作流程"  Clicked="button1_2_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="操作後注意事項"  Clicked="button1_2_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="常見問題與處理"  Clicked="button1_2_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="飲食與水分控制" Clicked="button1_3Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button1_3" IsVisible="False">
+                        <Button Text="1. 鈉（鹽分）攝取控制"  Clicked="button1_3_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 蛋白質攝取"  Clicked="button1_3_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 鉀與磷的攝取"  Clicked="button1_3_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 糖類與脂肪的攝取"  Clicked="button1_3_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="5. 每日飲水量計算"  Clicked="button1_3_5Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="6. 控制體重增加"  Clicked="button1_3_6Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="7. 減少口渴的方法"  Clicked="button1_3_7Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="8. 注意含水食物的攝取"  Clicked="button1_3_8Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    </StackLayout>
+
+                    <Button Text="生活習慣與日常建議" Clicked="button1_4Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button1_4" IsVisible="False">
+                        <Button Text="身體狀況追蹤"  Clicked="button1_4_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="心理狀況追蹤"  Clicked="button1_4_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="藥物使用與管理" Clicked="button1_5Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button1_5" IsVisible="False">
+                        <Button Text="1. 藥物使用原則"  Clicked="button1_5_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 常見藥物類型與注意事項"  Clicked="button1_5_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 藥物管理建議"  Clicked="button1_5_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 藥物與透析的關係"  Clicked="button1_5_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                </StackLayout>
+
+                <Button Text="健康監測與追蹤 ▼" Clicked="button2Clicked"
+                        BackgroundColor="#2C3E50" TextColor="White" FontSize="18" FontAttributes="Bold" CornerRadius="6" Margin="0"/>
+                <StackLayout x:Name="button2" IsVisible="False">
+                    <Button Text="身體與心理狀況追蹤" Clicked="button2_1Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button2_1" IsVisible="False">
+                        <Button Text="1. 身體狀況追蹤"  Clicked="button2_1_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 心理狀況追蹤"  Clicked="button2_1_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="定期追蹤與醫療合作" Clicked="button2_2Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button2_2" IsVisible="False">
+                        <Button Text="1. 定期回診與檢查"  Clicked="button2_2_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 與醫療團隊的合作"  Clicked="button2_2_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 健康數據的紀錄與管理"  Clicked="button2_2_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 教育訓練與自我照護"  Clicked="button2_2_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="自我學習與健康識能提升" Clicked="button2_3Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button2_3" IsVisible="False">
+                        <Button Text="1. 多元學習管道"  Clicked="button2_3_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 知識更新與持續學習"  Clicked="button2_3_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 健康管理與自我監測"  Clicked="button2_3_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 提升生活品質與心理調適"  Clicked="button2_3_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+                </StackLayout>
+
+                <Button Text="心理與社會支持 ▼" Clicked="button3Clicked"
+                        BackgroundColor="#2C3E50" TextColor="White" FontSize="18" FontAttributes="Bold" CornerRadius="6" Margin="0"/>
+                <StackLayout x:Name="button3" IsVisible="False">
+                    <Button Text="心理調適與支援" Clicked="button3_1Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button3_1" IsVisible="False">
+                        <Button Text="1. 情緒覺察與自我調適"  Clicked="button3_1_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 家庭與社會支持系統"  Clicked="button3_1_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 專業心理支援"  Clicked="button3_1_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 提升自我照護能力"  Clicked="button3_1_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="經濟與社會資源運用" Clicked="button3_2Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button3_2" IsVisible="False">
+                        <Button Text="1. 政府補助與保險資源"  Clicked="button3_2_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 社會福利與資源連結"  Clicked="button3_2_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 就業與生活支持"  Clicked="button3_2_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 資源申請與協助"  Clicked="button3_2_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+
+                    <Button Text="家庭照護者指南" Clicked="button3_3Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button3_3" IsVisible="False">
+                        <Button Text="1. 角色與責任"  Clicked="button3_3_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 腹膜透析操作協助"  Clicked="button3_3_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 健康監測與紀錄"  Clicked="button3_3_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 飲食與藥物管理"  Clicked="button3_3_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="5. 情緒支持與心理調適"  Clicked="button3_3_5Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="6. 緊急應變與災難備案"  Clicked="button3_3_6Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="7. 自我照護與學習"  Clicked="button3_3_7Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+                </StackLayout>
+
+                <Button Text="緊急應變與互動教學 ▼" Clicked="button4Clicked"
+                        BackgroundColor="#2C3E50" TextColor="White" FontSize="18" FontAttributes="Bold" CornerRadius="6" />
+                <StackLayout x:Name="button4" IsVisible="False">
+                    <Button Text="災難應變與緊急備案" Clicked="button4_1Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button4_1" IsVisible="False">
+                        <Button Text="1. 建立個人化的緊急應變計畫"  Clicked="button4_1_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 準備緊急備用物資"  Clicked="button4_1_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 災難發生時的應對措施"  Clicked="button4_1_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 與醫療機構的聯繫"  Clicked="button4_1_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="5. 教育與訓練"  Clicked="button4_1_5Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+                </StackLayout>
+                
+                <!--<Button Text="腹膜透析相關影片 ▼" Clicked="button5Clicked"
+                            BackgroundColor="#2C3E50" TextColor="White" FontSize="18" FontAttributes="Bold" CornerRadius="6" />
+                <StackLayout x:Name="button5" IsVisible="False">
+                    <Button Text="正確洗手" Clicked="button5_1Clicked"
+                            BackgroundColor="#BDC3C7" TextColor="Black" FontSize="16" CornerRadius="4"/>
+                    <StackLayout x:Name="button5_1" IsVisible="False">
+                        <Button Text="1. 建立個人化的緊急應變計畫"  Clicked="button5_1_1Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="2. 準備緊急備用物資"  Clicked="button5_1_2Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="3. 災難發生時的應對措施"  Clicked="button5_1_3Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="4. 與醫療機構的聯繫"  Clicked="button5_1_4Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                        <Button Text="5. 教育與訓練"  Clicked="button5_1_5Clicked"
+                            BackgroundColor="White" TextColor="Black" FontSize="16" CornerRadius="4"/>
+
+                    </StackLayout>
+                </StackLayout>-->
+
+                <Button Text="❌ 收合" Clicked="OnMenuCloseClicked"
+                        BackgroundColor="DarkRed" TextColor="White" FontAttributes="Bold" CornerRadius="6"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- 右上角主按鈕 -->
+        <Button x:Name="MenuToggleButton"
+                Text="☰"
+                WidthRequest="60"
+                HeightRequest="60"
+                BackgroundColor="LightGray"
+                AbsoluteLayout.LayoutBounds="1,0,40,40"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Clicked="OnMenuToggleClicked"
+                ZIndex="11"/>
+    </AbsoluteLayout>
+</ContentPage>
